@@ -14,6 +14,7 @@ baseado nas frequências ponderadas do primeiro código.
 - `sep.txt`: caracteres separadores que devem ser ignorados na tokenização.
 - `c1.txt`: primeiro código-fonte de exemplo.
 - `c2.txt`: segundo código-fonte de exemplo.
+- `saida_esperada.txt`: saída esperada para os arquivos de exemplo.
 - `materiais_auxiliares/RELATORIO_INTEGRANTES.tex`: relatório de atuação do grupo de 3 alunos em LaTeX.
 - `materiais_auxiliares/APRESENTACAO.md`: notas completas para lembrar durante a apresentação.
 - `materiais_auxiliares/APRENDIZADO_HASKELL.md`: explicação linha a linha do código e dos conceitos de Haskell usados.
@@ -75,7 +76,7 @@ Lista de palavras reservadas separadas por espaço, quebra de linha ou tabulaç�
 Exemplo:
 
 ```text
-if then else let in do return case of
+case class data default deriving do else foreign if import in infix infixl infixr instance let module newtype of then type where _
 ```
 
 ### `sep.txt`
@@ -130,18 +131,20 @@ Exemplo de formato:
 ```text
 --- Relatório de Frequências (c1) ---
 let: 4
-return: 4
 x: 3
 y: 3
+do: 2
 else: 2
 if: 2
+return: 2
 then: 2
 10: 1
 20: 1
+main: 1
 -------------------------------------
-m = 16
-Soma(f1) = 22
-Índice de Similaridade = 0.7272727272727273
+m = 17
+Soma(f1) = 23
+Índice de Similaridade = 0.7391304347826086
 ```
 
 ## Limpeza dos arquivos gerados

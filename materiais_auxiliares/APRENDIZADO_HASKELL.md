@@ -1246,24 +1246,24 @@ O fluxo do programa é:
 Com `c1.txt`:
 
 ```text
-let x=10
-let y=20
-if x==y then
-    return x
-else
-    return y
+main = do
+    let x=10
+    let y=20
+    if x==y
+        then return x
+        else return y
 ```
 
 Após remover os separadores, os tokens principais são:
 
 ```text
-let x 10 let y 20 if x y then return x else return y
+main do let x 10 let y 20 if x y then return x else return y
 ```
 
 Palavras reservadas do exemplo:
 
 ```text
-if then else let in do return case of
+case class data default deriving do else foreign if import in infix infixl infixr instance let module newtype of then type where _
 ```
 
 Frequências ponderadas de `c1`:
@@ -1271,19 +1271,21 @@ Frequências ponderadas de `c1`:
 | Palavra | Ocorrências | Peso | Frequência ponderada |
 |---|---:|---:|---:|
 | `let` | 2 | 2 | 4 |
-| `return` | 2 | 2 | 4 |
 | `x` | 3 | 1 | 3 |
 | `y` | 3 | 1 | 3 |
+| `do` | 1 | 2 | 2 |
 | `if` | 1 | 2 | 2 |
 | `then` | 1 | 2 | 2 |
 | `else` | 1 | 2 | 2 |
+| `return` | 2 | 1 | 2 |
 | `10` | 1 | 1 | 1 |
 | `20` | 1 | 1 | 1 |
+| `main` | 1 | 1 | 1 |
 
 Soma de `f1`:
 
 ```text
-4 + 4 + 3 + 3 + 2 + 2 + 2 + 1 + 1 = 22
+4 + 3 + 3 + 2 + 2 + 2 + 2 + 1 + 1 + 1 = 23
 ```
 
 Como `c2.txt` usa `a` e `b` no lugar de `x` e `y`, as palavras reservadas e os números continuam parecidos, mas os identificadores mudam.
@@ -1291,8 +1293,8 @@ Como `c2.txt` usa `a` e `b` no lugar de `x` e `y`, as palavras reservadas e os n
 Por isso:
 
 ```text
-m = 16
-similaridade = 16 / 22 = 0.7272727272727273
+m = 17
+similaridade = 17 / 23 = 0.7391304347826086
 ```
 
 ## 6. O que cada integrante precisa dominar

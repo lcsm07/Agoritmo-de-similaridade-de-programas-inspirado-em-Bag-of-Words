@@ -79,7 +79,7 @@ Lista as palavras reservadas usadas nos exemplos.
 Exemplo:
 
 ```text
-if then else let in do return case of
+case class data default deriving do else foreign if import in infix infixl infixr instance let module newtype of then type where _
 ```
 
 Se uma palavra do código estiver nesse arquivo, cada ocorrência dela soma `2`
@@ -274,8 +274,8 @@ Exemplo:
 
 ```text
 let -> 4
-return -> 4
 x -> 3
+do -> 2
 ```
 
 ## Ordenação do relatório
@@ -302,23 +302,23 @@ Como as três frequências são iguais, entra o critério lexicográfico.
 `c1.txt`:
 
 ```text
-let x=10
-let y=20
-if x==y then
-    return x
-else
-    return y
+main = do
+    let x=10
+    let y=20
+    if x==y
+        then return x
+        else return y
 ```
 
 `c2.txt`:
 
 ```text
-let a=10
-let b=20
-if a==b then
-    return a
-else
-    return b
+main = do
+    let a=10
+    let b=20
+    if a==b
+        then return a
+        else return b
 ```
 
 Após tokenização, a estrutura geral dos dois códigos é parecida. As palavras
@@ -396,7 +396,7 @@ valem o dobro.
 
 Porque o enunciado exige isso. A justificativa conceitual é que palavras
 reservadas representam estruturas importantes da linguagem, como condicionais,
-retornos e blocos. Por isso elas têm mais influência na métrica.
+módulos, declarações de tipos e blocos. Por isso elas têm mais influência na métrica.
 
 ### 4. O que acontece com palavras que não estão em `res.txt`?
 
@@ -422,8 +422,9 @@ Não, se esses operadores estiverem em `sep.txt`. No exemplo, símbolos como `=`
 
 ### 8. Como o programa calcula a frequência de uma palavra reservada?
 
-Cada ocorrência de palavra reservada soma 2. Então, se `return` aparece duas
-vezes, a frequência ponderada é 4.
+Cada ocorrência de palavra reservada soma 2. Então, se `let` aparece duas
+vezes, a frequência ponderada é 4. No exemplo atual, `return` não é palavra
+reservada de Haskell; ele é contado como palavra comum.
 
 ### 9. Como o programa calcula a frequência de uma palavra comum?
 
@@ -625,4 +626,3 @@ palavras.
 - `m` soma frequências de `c1` que aparecem de forma parecida em `c2`.
 - O índice é `m / soma(f1)`.
 - A solução é simples, funcional e alinhada ao Bag-of-Words.
-

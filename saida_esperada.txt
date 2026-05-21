@@ -1,0 +1,16 @@
+--- Relatório de Frequências (c1) ---
+let: 4
+x: 3
+y: 3
+do: 2
+else: 2
+if: 2
+return: 2
+then: 2
+10: 1
+20: 1
+main: 1
+-------------------------------------
+m = 17
+Soma(f1) = 23
+Índice de Similaridade = 0.7391304347826086
