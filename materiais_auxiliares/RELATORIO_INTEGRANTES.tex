@@ -1,0 +1,169 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{geometry}
+\usepackage{array}
+
+\geometry{margin=2.5cm}
+
+\title{Relatório de Atuação dos Integrantes}
+\author{Amon Sinder \and Lucas Silva \and Adryel Rodrigues}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Identificação do trabalho}
+
+\begin{itemize}
+    \item \textbf{Título:} Algoritmo de Similaridade de Programas inspirado em Bag-of-Words.
+    \item \textbf{Linguagem:} Haskell.
+    \item \textbf{Objetivo:} comparar dois arquivos de código-fonte por meio de frequências ponderadas de palavras, com peso dobrado para palavras reservadas.
+\end{itemize}
+
+\section{Integrantes}
+
+\begin{center}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{9cm}|}
+\hline
+\textbf{Integrante} & \textbf{Atuação principal} \\
+\hline
+Amon Sinder & Implementação do algoritmo principal em Haskell, incluindo tokenização, contagem de frequências ponderadas e cálculo da similaridade. \\
+\hline
+Lucas Silva & Organização dos arquivos de exemplo, apoio na validação manual das frequências e preparação do roteiro de compilação e execução com Makefile. \\
+\hline
+Adryel Rodrigues & Documentação do projeto, organização das notas de apresentação e revisão da explicação do funcionamento geral da solução. \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Resumo da solução}
+
+O programa implementa uma estratégia inspirada em Bag-of-Words para comparar dois códigos-fonte. A solução não tenta interpretar a semântica completa do programa nem montar uma árvore sintática. Em vez disso, observa a frequência das palavras encontradas nos arquivos de código.
+
+A entrada é composta por quatro arquivos:
+
+\begin{itemize}
+    \item \texttt{res.txt}: palavras reservadas da linguagem;
+    \item \texttt{sep.txt}: caracteres separadores que devem ser descartados;
+    \item \texttt{c1.txt}: primeiro código-fonte;
+    \item \texttt{c2.txt}: segundo código-fonte.
+\end{itemize}
+
+O programa substitui por espaço todos os caracteres separadores encontrados nos códigos. Em seguida, quebra o texto em palavras, computa frequências ponderadas e calcula o índice de similaridade entre os dois arquivos.
+
+Palavras reservadas recebem peso \texttt{2}, enquanto as demais palavras recebem peso \texttt{1}. Assim, uma palavra reservada que aparece duas vezes tem frequência ponderada igual a \texttt{4}.
+
+\section{Decisões de implementação}
+
+\subsection{Separadores tratados como caracteres}
+
+O arquivo \texttt{sep.txt} foi interpretado como uma lista de caracteres separadores. Essa decisão permite tratar corretamente trechos como:
+
+\begin{verbatim}
+x=10
+x==y
+foo(bar)
+valor;
+\end{verbatim}
+
+Sem essa etapa, esses trechos poderiam ser lidos como palavras únicas, prejudicando a contagem de frequências.
+
+\subsection{Uso de \texttt{Map}}
+
+Foi utilizado \texttt{Data.Map} para associar cada palavra à sua frequência ponderada. A estrutura representa diretamente a relação:
+
+\begin{verbatim}
+palavra -> frequencia
+\end{verbatim}
+
+\subsection{Uso de \texttt{Set}}
+
+Foi utilizado \texttt{Data.Set} para representar palavras reservadas e separadores. Isso torna direta a consulta sobre se uma palavra está em \texttt{res.txt} ou se um caractere está em \texttt{sep.txt}.
+
+\subsection{Regra dos 10\%}
+
+Para cada palavra presente em \texttt{c1}, o programa compara sua frequência ponderada \texttt{f1} com a frequência da mesma palavra em \texttt{c2}, chamada \texttt{f2}.
+
+A regra usada foi:
+
+\begin{verbatim}
+abs(f1 - f2) <= 10% de f1
+\end{verbatim}
+
+No código, a comparação é feita apenas com inteiros:
+
+\begin{verbatim}
+abs(f1 - f2) * 10 <= f1
+\end{verbatim}
+
+Isso evita problemas de arredondamento com números reais.
+
+\section{Divisão das atividades}
+
+A divisão abaixo foi feita de maneira equilibrada entre os três integrantes, separando implementação, validação e documentação.
+
+\subsection{Amon Sinder}
+
+\begin{itemize}
+    \item Implementou a estrutura principal do arquivo \texttt{Main.hs}.
+    \item Criou a função de tokenização baseada nos caracteres de \texttt{sep.txt}.
+    \item Implementou a contagem de frequências ponderadas.
+    \item Implementou o peso dobrado para palavras reservadas.
+    \item Implementou o cálculo do valor \texttt{m} e do índice \texttt{m / soma(f1)}.
+\end{itemize}
+
+\subsection{Lucas Silva}
+
+\begin{itemize}
+    \item Preparou os arquivos de exemplo \texttt{res.txt}, \texttt{sep.txt}, \texttt{c1.txt} e \texttt{c2.txt}.
+    \item Ajustou os exemplos para demonstrar separadores colados ao código, como \texttt{x=10} e \texttt{x==y}.
+    \item Organizou o \texttt{Makefile} com comandos de compilação, execução e limpeza.
+    \item Conferiu manualmente as frequências esperadas nos exemplos.
+    \item Validou se a saída exibe frequências decrescentes e desempate lexicográfico.
+\end{itemize}
+
+\subsection{Adryel Rodrigues}
+
+\begin{itemize}
+    \item Organizou o \texttt{README.md} com instruções de uso.
+    \item Preparou as notas de apresentação do grupo.
+    \item Revisou a explicação da regra dos 10\%.
+    \item Documentou as limitações conhecidas do algoritmo.
+    \item Organizou o material auxiliar de aprendizado de Haskell.
+\end{itemize}
+
+\section{Como o grupo pretende apresentar}
+
+O grupo não seguirá uma apresentação rígida por slides. A apresentação será conduzida como uma explicação direta do funcionamento do projeto, com demonstração dos arquivos e do fluxo de execução.
+
+Os pontos principais a serem lembrados são:
+
+\begin{itemize}
+    \item explicar a inspiração em Bag-of-Words;
+    \item mostrar os quatro arquivos de entrada;
+    \item explicar por que os separadores são tratados como caracteres;
+    \item explicar o peso dobrado de palavras reservadas;
+    \item mostrar como o valor \texttt{m} é calculado;
+    \item mostrar como o índice final \texttt{m / soma(f1)} é obtido;
+    \item executar o programa com \texttt{make run}, caso haja ambiente com GHC disponível.
+\end{itemize}
+
+\section{Limitações conhecidas}
+
+O algoritmo é propositalmente simples, conforme a proposta inspirada em Bag-of-Words. Ele compara frequências de palavras, mas não interpreta o significado do código.
+
+Por esse motivo, dois programas semanticamente equivalentes podem ter baixa similaridade se forem escritos com identificadores e estruturas lexicais muito diferentes. O programa também não trata comentários e literais de string de forma especial.
+
+Essas limitações foram aceitas para manter a solução enxuta, funcional e alinhada ao escopo do enunciado.
+
+\section{Conclusão}
+
+A solução atende ao objetivo do trabalho ao ler quatro arquivos, computar frequências ponderadas, imprimir as frequências de \texttt{c1} em ordem decrescente e calcular uma métrica de similaridade baseada na diferença de até 10\% entre as frequências dos dois códigos.
+
+O projeto foi mantido pequeno para que todos os integrantes consigam compreender e explicar todas as partes principais durante a apresentação.
+
+\end{document}

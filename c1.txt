@@ -1,6 +1,6 @@
-let x = 10
-let y = 20
-if x == y then
+let x=10
+let y=20
+if x==y then
     return x
 else
     return y
