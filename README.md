@@ -14,8 +14,8 @@ baseado nas frequências ponderadas do primeiro código.
 - `sep.txt`: caracteres separadores que devem ser ignorados na tokenização.
 - `c1.txt`: primeiro código-fonte de exemplo.
 - `c2.txt`: segundo código-fonte de exemplo.
-- `RELATORIO_INTEGRANTES.tex`: relatório de atuação do grupo de 3 alunos em LaTeX.
-- `APRESENTACAO.md`: notas livres para lembrar durante a apresentação.
+- `materiais_auxiliares/RELATORIO_INTEGRANTES.tex`: relatório de atuação do grupo de 3 alunos em LaTeX.
+- `materiais_auxiliares/APRESENTACAO.md`: notas completas para lembrar durante a apresentação.
 - `materiais_auxiliares/APRENDIZADO_HASKELL.md`: explicação linha a linha do código e dos conceitos de Haskell usados.
 
 ## Requisitos
@@ -157,5 +157,5 @@ Esse comando remove o executável e os arquivos intermediários gerados pelo GHC
 Caso tenha uma distribuição LaTeX instalada:
 
 ```bash
-pdflatex RELATORIO_INTEGRANTES.tex
+pdflatex materiais_auxiliares/RELATORIO_INTEGRANTES.tex
 ```
