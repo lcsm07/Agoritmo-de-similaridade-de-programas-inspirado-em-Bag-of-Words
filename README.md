@@ -1,133 +1,36 @@
 # Algoritmo de Similaridade de Programas inspirado em Bag-of-Words
 
-Implementação em Haskell de um algoritmo simples de similaridade entre dois
-arquivos de código-fonte. O programa conta as palavras de cada arquivo,
-aplica peso dobrado em palavras reservadas e calcula um índice de similaridade
-baseado nas frequências ponderadas do primeiro código.
+Implementação em Haskell de um algoritmo simples de similaridade entre dois arquivos de código-fonte.
 
-## Arquivos do projeto
+## Compilação e Execução
 
-- `Main.hs`: código-fonte principal em Haskell.
-- `Makefile`: comandos de compilação, execução e limpeza.
-- `.gitignore`: ignora executável e arquivos intermediários gerados pelo GHC.
-- `res.txt`: palavras reservadas da linguagem usada nos exemplos.
-- `sep.txt`: caracteres separadores que devem ser ignorados na tokenização.
-- `c1.txt`: primeiro código-fonte de exemplo.
-- `c2.txt`: segundo código-fonte de exemplo.
-- `saida_esperada.txt`: saída esperada para os arquivos de exemplo.
-- `materiais_auxiliares/RELATORIO_INTEGRANTES.tex`: relatório de atuação do grupo de 3 alunos em LaTeX.
-- `materiais_auxiliares/APRESENTACAO.md`: notas completas para lembrar durante a apresentação.
-- `materiais_auxiliares/APRENDIZADO_HASKELL.md`: explicação linha a linha do código e dos conceitos de Haskell usados.
-
-## Requisitos
-
-É necessário ter o compilador GHC instalado.
-
-Em distribuições Linux baseadas em Fedora:
-
-```bash
-sudo dnf install ghc make
-```
-
-Em distribuições baseadas em Debian/Ubuntu:
-
-```bash
-sudo apt install ghc make
-```
-
-## Como compilar
-
+Para compilar o código (é necessário possuir o compilador GHC e a ferramenta `make`):
 ```bash
 make build
 ```
 
-Esse comando gera o executável `similaridade`.
-
-## Como executar com os exemplos
-
+Para rodar com os exemplos fornecidos no repositório:
 ```bash
 make run
 ```
 
-O alvo `run` executa:
-
+Para rodar com outros arquivos, utilize a estrutura abaixo:
 ```bash
-./similaridade res.txt sep.txt c1.txt c2.txt
+./similaridade <arquivo_palavras_reservadas> <arquivo_separadores> <codigo_1> <codigo_2>
 ```
 
-## Como executar com outros arquivos
+## Arquivos de Entrada Esperados
 
-```bash
-./similaridade <res.txt> <sep.txt> <codigo1.txt> <codigo2.txt>
-```
+O programa aguarda as seguintes entradas (passadas via linha de comando):
+- **Palavras reservadas** (ex: `res.txt`): Lista de palavras-chave da linguagem (possuem peso dobrado no cálculo de similaridade).
+- **Separadores** (ex: `sep.txt`): Caracteres que devem ser ignorados, como  `=`, `+`, `{`, `;`, etc.
+- **Códigos Reais** (ex: `c1.txt` e `c2.txt`): Os dois arquivos com o código-fonte a serem comparados.
 
-Exemplo:
+## Saída Esperada
 
-```bash
-./similaridade res.txt sep.txt c1.txt c2.txt
-```
+Ao longo da execução, o terminal imprimirá um cabeçalho com o relatório de frequências de ocorrência no primeiro arquivo (ordenado em ordem decrescente) e os cálculos finais do índice de similaridade.
 
-## Formato dos arquivos de entrada
-
-### `res.txt`
-
-Lista de palavras reservadas separadas por espaço, quebra de linha ou tabulação.
-
-Exemplo:
-
-```text
-case class data default deriving do else foreign if import in infix infixl infixr instance let module newtype of then type where _
-```
-
-### `sep.txt`
-
-Lista de caracteres separadores a descartar. Eles podem aparecer separados por
-espaço para facilitar a leitura.
-
-Exemplo:
-
-```text
-= + - * / ( ) { } ; [ ] , .
-```
-
-Durante a leitura dos códigos, cada caractere listado em `sep.txt` é substituído
-por espaço. Depois disso, o programa quebra o texto em palavras com `words`.
-Assim, trechos como `x==y`, `foo(bar)` e `valor;` são separados corretamente.
-
-### `c1.txt` e `c2.txt`
-
-Arquivos de código-fonte que serão comparados.
-
-## Regra implementada
-
-1. O programa lê os quatro arquivos informados por linha de comando.
-2. As palavras reservadas são carregadas de `res.txt`.
-3. Os separadores são carregados de `sep.txt`.
-4. Cada código é tokenizado, removendo os separadores.
-5. Cada palavra recebe frequência ponderada:
-   - peso `2` se estiver em `res.txt`;
-   - peso `1` caso contrário.
-6. O relatório imprime as frequências ponderadas de `c1` em ordem decrescente.
-7. Em caso de empate na frequência, a ordenação é lexicográfica crescente.
-8. Para cada palavra de `c1`, o programa compara `f1` com a frequência da mesma palavra em `c2`.
-9. Se `f2` diferir de `f1` em no máximo 10% de `f1`, o valor de `f1` entra no somatório `m`.
-10. O índice final é:
-
-```text
-similaridade = m / soma(f1)
-```
-
-## Saída
-
-A saída mostra:
-
-- relatório de frequências de `c1`;
-- valor de `m`;
-- soma das frequências ponderadas de `c1`;
-- índice de similaridade.
-
-Exemplo de formato:
-
+**Exemplo:**
 ```text
 --- Relatório de Frequências (c1) ---
 let: 4
@@ -137,28 +40,9 @@ do: 2
 else: 2
 if: 2
 return: 2
-then: 2
-10: 1
-20: 1
-main: 1
+...
 -------------------------------------
 m = 17
 Soma(f1) = 23
 Índice de Similaridade = 0.7391304347826086
-```
-
-## Limpeza dos arquivos gerados
-
-```bash
-make clean
-```
-
-Esse comando remove o executável e os arquivos intermediários gerados pelo GHC.
-
-## Como gerar o PDF do relatório
-
-Caso tenha uma distribuição LaTeX instalada:
-
-```bash
-pdflatex materiais_auxiliares/RELATORIO_INTEGRANTES.tex
 ```

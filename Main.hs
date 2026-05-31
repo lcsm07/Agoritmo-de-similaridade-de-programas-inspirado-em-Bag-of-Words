@@ -72,11 +72,11 @@ main = do
                 sorted1 = sortBy frequencyOrder list1
                 m = matchingScore freq1 freq2
                 sumF1 = totalFrequency freq1
-                sim = similarityIndex freq1 freq2
+                similarity = similarityIndex freq1 freq2
                 
             putStrLn "--- Relatório de Frequências (c1) ---"
             mapM_ (\(w, f) -> putStrLn $ w ++ ": " ++ show f) sorted1
             putStrLn "-------------------------------------"
             putStrLn $ "m = " ++ show m
             putStrLn $ "Soma(f1) = " ++ show sumF1
-            putStrLn $ "Índice de Similaridade = " ++ show sim
+            putStrLn $ "Índice de Similaridade = " ++ show similarity
